@@ -14,24 +14,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            Log.i("MyTag", "Calculation Starting...")
-
-            val stock1: Deferred<Int> = async(Dispatchers.IO) { getStock1() }
-            val stock2: Deferred<Int> = async(Dispatchers.IO) { getStock2() }
-            val total = stock1.await() + stock2.await()
-            Toast.makeText(applicationContext, "Total Value: $total", Toast.LENGTH_LONG).show()
-            Log.i("MyTag", "Total is $total")
-        }
+//        CoroutineScope(Dispatchers.Main).launch {
+//            Log.i("MyTag", "Calculation Starting...")
+//
+//            val stock1: Deferred<Int> = async(Dispatchers.IO) { getStock1() }
+//            val stock2: Deferred<Int> = async(Dispatchers.IO) { getStock2() }
+//            val total = stock1.await() + stock2.await()
+//            Toast.makeText(applicationContext, "Total Value: $total", Toast.LENGTH_LONG).show()
+//            Log.i("MyTag", "Total is $total")
+//        }
 
 //        btnCount.setOnClickListener {
 //            tvCount.text = count++.toString()
 //        }
-//        btnDownloadUserData.setOnClickListener {
-//            CoroutineScope(Dispatchers.IO).launch {
+        btnDownloadUserData.setOnClickListener {
+            CoroutineScope(Dispatchers.Main).launch {
 //                downloadUserData()
-//            }
-//        }
+//                tvUserMessage.text = UserDataManager1().getTotalUserCount().toString()
+                tvUserMessage.text = UserDataManager2().getTotalUserCount().toString()
+            }
+        }
     }
 
     private suspend fun downloadUserData() {
