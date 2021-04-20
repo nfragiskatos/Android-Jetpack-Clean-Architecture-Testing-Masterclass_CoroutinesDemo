@@ -1,12 +1,9 @@
 package com.nfragiskatos.coroutinesdemo1
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private var count = 0
@@ -25,9 +22,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun downloadUserData() {
-        for (i in 1..200000) {
-            Log.i("MyTag", "Downloading user $i in ${Thread.currentThread().name}")
+    private suspend fun downloadUserData() {
+
+//            Log.i("MyTag", "Downloading user $i in ${Thread.currentThread().name}")
+        withContext(Dispatchers.Main) {
+            for (i in 1..200000) {
+                tvUserMessage.text = "Downloading user $i in ${Thread.currentThread().name}"
+                delay(1000)
+            }
         }
+
     }
 }
